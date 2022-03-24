@@ -1,32 +1,69 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/instance_manager.dart';
+import 'package:get/get.dart';
+import 'package:parsingujikom/screens/artikel_screen.dart';
+import 'package:parsingujikom/screens/user_screen.dart';
 
-import '../controllers/album_controller.dart';
-
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _controller = Get.find<AlbumController>();
-
+    var size = MediaQuery.of(context).size;
+    var height = size.height;
+    var width = size.width;
     return Scaffold(
-      body: Obx(
-        () => _controller.isLoading.value
-            ? Center(child: const CircularProgressIndicator())
-            : Center(
+      appBar: AppBar(title: Text("Parsing Ujikom"), centerTitle: true),
+      body: Container(
+        // width: width / 1,
+        height: height / 1,
+        color: Colors.blue,
+        child: ListView(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Get.to(ArtikelScreen());
+              },
+              child: Container(
+                width: 200,
+                height: 200,
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [Colors.yellowAccent, Colors.redAccent]),
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text('AlbumID: ${_controller.photoList[0].albumId}'),
-                    Text('ID: ${_controller.photoList[0].id}'),
-                    Text('title:${_controller.photoList[0].title}'),
-                    Image.network(_controller.photoList[0].thumbnailUrl,
-                        fit: BoxFit.cover),
+                    Text("Artikel"),
                   ],
                 ),
               ),
+            ),
+            SizedBox(height: 10),
+            GestureDetector(
+              onTap: () {
+                Get.to(UserScreen());
+              },
+              child: Container(
+                width: 200,
+                height: 200,
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [Colors.yellowAccent, Colors.redAccent]),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text("User"),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

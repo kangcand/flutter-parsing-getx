@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
 
-import '../controllers/user_controller.dart';
+import '../controllers/artikel_controller.dart';
 
-class UserScreen extends StatelessWidget {
-  const UserScreen({Key? key}) : super(key: key);
+class ArtikelScreen extends StatelessWidget {
+  const ArtikelScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final UserController usercontroller = Get.put(UserController());
+    final ArtikelController artikelcontroller = Get.put(ArtikelController());
     var size, height, width;
     size = MediaQuery.of(context).size;
     height = size.height;
@@ -20,22 +20,22 @@ class UserScreen extends StatelessWidget {
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text("User"),
+        title: Text("Artikel"),
         centerTitle: true,
       ),
       body: Obx(
-        () => usercontroller.isLoading()
+        () => artikelcontroller.isLoading()
             ? Center(child: const CircularProgressIndicator())
             : Center(
                 child: ListView.builder(
-                itemCount: usercontroller.userList.length,
+                itemCount: artikelcontroller.artikelList.length,
                 itemBuilder: (content, index) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
                         width: 400,
-                        height: 100,
+                        height: 400,
                         margin: EdgeInsets.only(bottom: 10, top: 10),
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
@@ -46,12 +46,24 @@ class UserScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            Image.network(
+                                "http://candra-ujikom.herokuapp.com/images/article/" +
+                                    artikelcontroller.artikelList[index].foto
+                                        .toString(),
+                                fit: BoxFit.fitWidth),
                             Text(
-                                usercontroller.userList[index].name.toString()),
-                            Text(usercontroller.userList[index].email
-                                .toString()),
-                            Text(usercontroller.userList[index].createdAt
-                                .toString())
+                              "Judul : " +
+                                  artikelcontroller.artikelList[index].title
+                                      .toString(),
+                              style: TextStyle(backgroundColor: Colors.amber),
+                            ),
+                            Text(
+                                "Kategori : " +
+                                    artikelcontroller
+                                        .artikelList[index].kategori
+                                        .toString(),
+                                style:
+                                    TextStyle(backgroundColor: Colors.amber)),
                           ],
                         ),
                       ),

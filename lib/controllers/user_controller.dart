@@ -19,6 +19,7 @@ class UserController extends GetxController {
       isLoading(true);
       var users = await UserService.fetchUserData();
       userList.value = users.data as List<Data>;
+      update();
     } finally {
       isLoading(false);
     }
